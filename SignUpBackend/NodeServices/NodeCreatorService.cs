@@ -51,47 +51,65 @@ namespace SignUpBackend
         }
 
         public static void AddEmailNode(string mailAdress)
-        { 
-            string mailPath = @"mails.txt";
-            
-            using (StreamWriter AddMailAdress = new StreamWriter(mailPath, true))
+        {
+            try
             {
-                
-                if (isReadOnlyMail == false)
-                {
-                    AddMailAdress.WriteLine($"{mailAdress}");
-                    
-                    SetMailFileReadAccess(localMail, true);
-                }
+                string mailPath = @"mails.txt";
 
-                else if (isReadOnlyMail == true)
+                using (StreamWriter AddMailAdress = new StreamWriter(mailPath, true))
                 {
-                    SetMailFileReadAccess(localMail, false);
-                   
-                    AddMailAdress.WriteLine($"{mailAdress}");        
+
+                    if (isReadOnlyMail == false)
+                    {
+                        AddMailAdress.WriteLine($"{mailAdress}");
+
+                        SetMailFileReadAccess(localMail, true);
+                    }
+
+                    else if (isReadOnlyMail == true)
+                    {
+                        SetMailFileReadAccess(localMail, false);
+
+                        AddMailAdress.WriteLine($"{mailAdress}");
+                    }
                 }
             }
+
+            catch (Exception AddMailError)
+            {
+                System.Windows.Forms.MessageBox.Show($"MailNode Error Detected\n{AddMailError}");
+                return;
+            }
+            
         }
 
         public static void AddPassNode(string accPass)
         {
-            string passPath = @"passwords.txt";
-
-            using (StreamWriter AddPassword = new StreamWriter(passPath, true))
+            try
             {
-                if (isReadOnlyPass == false)
-                {
-                    AddPassword.WriteLine($"{accPass}");
-                    
-                    SetPassFileReadAccess(localPass, true);
-                }
+                string passPath = @"passwords.txt";
 
-                else if (isReadOnlyPass == true)
+                using (StreamWriter AddPassword = new StreamWriter(passPath, true))
                 {
-                    SetPassFileReadAccess(localPass, false);
-                    
-                    AddPassword.WriteLine($"{accPass}");
+                    if (isReadOnlyPass == false)
+                    {
+                        AddPassword.WriteLine($"{accPass}");
+
+                        SetPassFileReadAccess(localPass, true);
+                    }
+
+                    else if (isReadOnlyPass == true)
+                    {
+                        SetPassFileReadAccess(localPass, false);
+
+                        AddPassword.WriteLine($"{accPass}");
+                    }
                 }
+            }
+            catch (Exception AddPasswordError)
+            {
+                System.Windows.Forms.MessageBox.Show($"PassNode Error Detected\n{AddPasswordError}");
+                return;
             }
         }
     }

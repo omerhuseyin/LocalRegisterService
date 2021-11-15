@@ -1,5 +1,4 @@
-﻿//laweisNodes. Coded by laweis on 2021 <3 0w0
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,16 +50,16 @@ namespace SignUpBackend
             mInfo.IsReadOnly = SetReadOnlyPass;
         }
 
-        public static void AddEmailNode(string message)
+        public static void AddEmailNode(string mailAdress)
         { 
             string mailPath = @"mails.txt";
             
-            using (StreamWriter writer = new StreamWriter(mailPath, true))
+            using (StreamWriter AddMailAdress = new StreamWriter(mailPath, true))
             {
                 
                 if (isReadOnlyMail == false)
                 {
-                    writer.WriteLine($"{message}");
+                    AddMailAdress.WriteLine($"{mailAdress}");
                     
                     SetMailFileReadAccess(localMail, true);
                 }
@@ -69,20 +68,20 @@ namespace SignUpBackend
                 {
                     SetMailFileReadAccess(localMail, false);
                    
-                    writer.WriteLine($"{message}");        
+                    AddMailAdress.WriteLine($"{mailAdress}");        
                 }
             }
         }
 
-        public static void AddPassNode(string message)
+        public static void AddPassNode(string accPass)
         {
             string passPath = @"passwords.txt";
 
-            using (StreamWriter writer = new StreamWriter(passPath, true))
+            using (StreamWriter AddPassword = new StreamWriter(passPath, true))
             {
                 if (isReadOnlyPass == false)
                 {
-                    writer.WriteLine($"{message}");
+                    AddPassword.WriteLine($"{accPass}");
                     
                     SetPassFileReadAccess(localPass, true);
                 }
@@ -91,11 +90,9 @@ namespace SignUpBackend
                 {
                     SetPassFileReadAccess(localPass, false);
                     
-                    writer.WriteLine($"{message}");
+                    AddPassword.WriteLine($"{accPass}");
                 }
             }
         }
-
-        
     }
 }

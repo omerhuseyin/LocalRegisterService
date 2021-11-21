@@ -53,6 +53,8 @@
     <Compile Include="NodeServices\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="NodeServices\NodeEditingService.cs" />
+    <Compile Include="NodeServices\NodeIndexingService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="NodeServices\Form1.resx">

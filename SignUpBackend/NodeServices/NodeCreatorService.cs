@@ -8,8 +8,14 @@ using System.IO;
 
 namespace SignUpBackend
 {
+
     public static class NodeCreatorService
     {
+
+        static string localMail = "mails.txt";
+
+        static string localPass = "passwords.txt";
+
         static bool isReadOnlyMail = IsMailFileReadOnly(localMail);
 
         static bool isReadOnlyPass = IsPassFileReadOnly(localPass);
@@ -17,10 +23,7 @@ namespace SignUpBackend
         public static bool IsMailReadOnly { get; set; }
 
         public static bool IsPassReadOnly { get; set; }
-        
-        static string localMail = "mails.txt";
-        
-        static string localPass = "passwords.txt";
+
 
         public static bool IsMailFileReadOnly(string localMail)
         {
@@ -32,85 +35,69 @@ namespace SignUpBackend
         public static void SetMailFileReadAccess(string localMail, bool SetReadOnlyMail)
         {
             FileInfo mInfo = new FileInfo(localMail);
-            
+
             mInfo.IsReadOnly = SetReadOnlyMail;
         }
 
         public static bool IsPassFileReadOnly(string localPass)
         {
             FileInfo pInfo = new FileInfo(localPass);
-            
+
             return pInfo.IsReadOnly;
         }
 
         public static void SetPassFileReadAccess(string localPass, bool SetReadOnlyPass)
         {
             FileInfo mInfo = new FileInfo(localPass);
-           
+
             mInfo.IsReadOnly = SetReadOnlyPass;
         }
 
-        public static void AddEmailNode(string mailAdress)
+        public static void AddEmailNode(string message)
         {
-            try
+            string mailPath = @"mails.txt";
+
+            using (StreamWriter writer = new StreamWriter(mailPath, true))
             {
-                string mailPath = @"mails.txt";
 
-                using (StreamWriter AddMailAdress = new StreamWriter(mailPath, true))
+                if (isReadOnlyMail == false)
                 {
+                    writer.WriteLine($"{message}");
 
-                    if (isReadOnlyMail == false)
-                    {
-                        AddMailAdress.WriteLine($"{mailAdress}");
+                    SetMailFileReadAccess(localMail, true);
+                }
 
-                        SetMailFileReadAccess(localMail, true);
-                    }
+                else if (isReadOnlyMail == true)
+                {
+                    SetMailFileReadAccess(localMail, false);
 
-                    else if (isReadOnlyMail == true)
-                    {
-                        SetMailFileReadAccess(localMail, false);
-
-                        AddMailAdress.WriteLine($"{mailAdress}");
-                    }
+                    writer.WriteLine($"{message}");
                 }
             }
-
-            catch (Exception AddMailError)
-            {
-                System.Windows.Forms.MessageBox.Show($"MailNode Error Detected\n{AddMailError}");
-                return;
-            }
-            
         }
 
-        public static void AddPassNode(string accPass)
+        public static void AddPassNode(string message)
         {
-            try
+            string passPath = @"passwords.txt";
+
+            using (StreamWriter writer = new StreamWriter(passPath, true))
             {
-                string passPath = @"passwords.txt";
-
-                using (StreamWriter AddPassword = new StreamWriter(passPath, true))
+                if (isReadOnlyPass == false)
                 {
-                    if (isReadOnlyPass == false)
-                    {
-                        AddPassword.WriteLine($"{accPass}");
+                    writer.WriteLine($"{message}");
 
-                        SetPassFileReadAccess(localPass, true);
-                    }
+                    SetPassFileReadAccess(localPass, true);
+                }
 
-                    else if (isReadOnlyPass == true)
-                    {
-                        SetPassFileReadAccess(localPass, false);
+                else if (isReadOnlyPass == true)
+                {
+                    SetPassFileReadAccess(localPass, false);
 
-                        AddPassword.WriteLine($"{accPass}");
-                    }
+                    writer.WriteLine($"{message}");
                 }
             }
-            catch (Exception AddPasswordError)
-            {
-                System.Windows.Forms.MessageBox.Show($"PassNode Error Detected\n{AddPasswordError}");
-                return;
-            }
         }
+
+
     }
 }

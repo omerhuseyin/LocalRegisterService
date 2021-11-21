@@ -48,8 +48,6 @@ namespace SignUpBackend
             foreach (var Transferred in ListMailAdress)
 
                 listBox1.Items.Add(Transferred);
-
-            
         }
 
         private void button2_Click(object sender, EventArgs e)
